@@ -1,5 +1,9 @@
+import logoImg from "../assets/images/logo.svg";
+
 export default function Logo() {
     return (
-        <img src="/src/assets/images/logo.svg" alt="logo" className="mt-5" />
+        <a href="/">
+            <img src={logoImg} alt="logo" />
+        </a>
     );
 }
