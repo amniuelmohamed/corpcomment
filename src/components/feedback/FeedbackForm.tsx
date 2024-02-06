@@ -1,9 +1,8 @@
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
-import { TEXTAREA_MAX_LENGTH } from "../lib/constants";
-import Warning from "./Warning";
-import { useFeedbackItemsContext } from "../lib/hooks";
-import { TFeedbackItem } from "../lib/types";
+import { TEXTAREA_MAX_LENGTH } from "../../lib/constants";
+import Warning from "../Warning";
+import { useFeedbackItemsContext } from "../../lib/hooks";
 
 export default function FeedbackForm() {
     const [feedback, setFeedback] = useState("");
@@ -13,7 +12,7 @@ export default function FeedbackForm() {
 
     const [warningMessage, setWarningMessage] = useState("");
 
-    const { setFeedbackItems } = useFeedbackItemsContext();
+    const { handleAddFeedback, errorMessage } = useFeedbackItemsContext();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -38,22 +37,7 @@ export default function FeedbackForm() {
             return;
         }
 
-        const companyName = company.slice(1);
-
-        const feedbackData: TFeedbackItem = {
-            id: new Date().toISOString(),
-            text: feedback,
-            company: companyName,
-            badgeLetter: companyName[0].toUpperCase(),
-            upvoteCount: 0,
-            daysAgo: 0,
-        };
-
-        setFeedbackItems((prevFeedbackItems) => [
-            feedbackData,
-            ...prevFeedbackItems,
-        ]);
-
+        handleAddFeedback(feedback, company.slice(1));
         setFeedback("");
     };
 
@@ -77,8 +61,9 @@ export default function FeedbackForm() {
                 value={feedback}
                 onChange={handleInput}
                 id="feedback"
-                className="resize-none p-3 outline-none peer bg-transparent text-white/80 flex-grow"
+                className="resize-none p-3 outline-none peer bg-transparent text-white/80 flex-grow disabled:opacity-50"
                 placeholder=""
+                disabled={errorMessage.length > 0}
             />
             <label
                 htmlFor="feedback"
@@ -97,7 +82,8 @@ export default function FeedbackForm() {
                 )}
                 <button
                     type="submit"
-                    className="rounded-full px-4 py-2 bg-white text-black uppercase font-bold text-sm"
+                    className="rounded-full px-4 py-2 bg-white text-black uppercase font-bold text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={errorMessage.length > 0}
                 >
                     Submit
                 </button>

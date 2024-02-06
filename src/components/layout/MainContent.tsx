@@ -1,5 +1,5 @@
-import FeedbackItemsContextProvider from "../contexts/FeedbackItemsContextProvider";
-import FeedbackList from "./FeedbackList";
+import FeedbackItemsContextProvider from "../../contexts/FeedbackItemsContextProvider";
+import FeedbackList from "../feedback/FeedbackList";
 import Header from "./Header";
 
 export default function MainContent() {

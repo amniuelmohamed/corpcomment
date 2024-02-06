@@ -1,5 +1,5 @@
 import { TriangleUpIcon } from "@radix-ui/react-icons";
-import { TFeedbackItem } from "../lib/types";
+import { TFeedbackItem } from "../../lib/types";
 
 type FeedbackProps = {
     feedbackItem: TFeedbackItem;
@@ -31,7 +31,9 @@ export default function Feedback({ feedbackItem }: FeedbackProps) {
                     <p className="leading-tight">{feedbackItem.text}</p>
                 </div>
                 <span className="text-sm text-black/40 font-semibold">
-                    {feedbackItem.daysAgo}d
+                    {feedbackItem.daysAgo === 0
+                        ? "Today"
+                        : `${feedbackItem.daysAgo}d`}
                 </span>
             </div>
         </li>
