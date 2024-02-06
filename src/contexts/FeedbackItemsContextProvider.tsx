@@ -31,12 +31,14 @@ export default function FeedbackItemsContextProvider({
                 "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks"
             );
             if (!res.ok) {
-                setErrorMessage("Failed to fetch feedbacks");
-                return;
+                toast.error("Failed to fetch feedbacks");
+                throw new Error();
             }
             const data = await res.json();
+            toast.success("Feedbacks fetched successfully");
             setFeedbackItems(data.feedbacks);
         } catch (e) {
+            toast.error("Something went wrong!");
             setErrorMessage("Something went wrong!");
         } finally {
             setLoading(false);
@@ -71,7 +73,7 @@ export default function FeedbackItemsContextProvider({
             toast.success("Feedback added successfully");
             fetchFeedbacks();
         } catch (e) {
-            setErrorMessage("Failed to add feedback");
+            toast.error("Failed to add feedback");
         }
     };
 
