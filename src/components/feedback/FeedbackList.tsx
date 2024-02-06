@@ -1,7 +1,7 @@
 import { HashLoader } from "react-spinners";
-import { useFeedbackItemsContext } from "../lib/hooks";
+import { useFeedbackItemsContext } from "../../lib/hooks";
 import Feedback from "./Feedback";
-import Warning from "./Warning";
+import Warning from "../Warning";
 
 export default function FeedbackList() {
     const { feedbackItems, loading, errorMessage } = useFeedbackItemsContext();
