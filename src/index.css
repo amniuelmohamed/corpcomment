@@ -3,5 +3,53 @@
 @tailwind utilities;
 
 body {
-    background-color: #5c458c;
+    background: -moz-radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(92, 69, 140, 0.73) 54%,
+        rgba(92, 69, 140, 1) 100%
+    );
+
+    background: -webkit-radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(92, 69, 140, 0.73) 54%,
+        rgba(92, 69, 140, 1) 100%
+    );
+
+    background: -o-radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(92, 69, 140, 0.73) 54%,
+        rgba(92, 69, 140, 1) 100%
+    );
+
+    background: -ms-radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(92, 69, 140, 0.73) 54%,
+        rgba(92, 69, 140, 1) 100%
+    );
+
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(92, 69, 140, 0.73) 54%,
+        rgba(92, 69, 140, 1) 100%
+    );
+}
+
+/* FEEDBACKS */
+.feedback-list {
+    scrollbar-color: #979ca0 #dbdfe4;
+    scrollbar-width: thin;
+}
+.feedback-list::-webkit-scrollbar {
+    width: 7px;
+}
+.feedback-list::-webkit-scrollbar-track {
+    background-color: #dbdfe4;
+}
+.feedback-list::-webkit-scrollbar-thumb {
+    background-color: #979ca0;
 }
