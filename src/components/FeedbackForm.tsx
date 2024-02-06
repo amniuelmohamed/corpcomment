@@ -2,7 +2,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { TEXTAREA_MAX_LENGTH } from "../lib/constants";
 import Warning from "./Warning";
-import { getDaysAgo } from "../lib/utils";
+import { useFeedbackItemsContext } from "../lib/hooks";
 
 export default function FeedbackForm() {
     const [feedback, setFeedback] = useState("");
@@ -11,6 +11,8 @@ export default function FeedbackForm() {
     const remainingCharacters = TEXTAREA_MAX_LENGTH - feedback.length;
 
     const [warningMessage, setWarningMessage] = useState("");
+
+    const { setFeedbackItems } = useFeedbackItemsContext();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -35,17 +37,20 @@ export default function FeedbackForm() {
             return;
         }
 
-        const companyName = company.slice(1).toUpperCase();
+        const companyName = company.slice(1);
 
         const feedbackData = {
+            id: new Date().toISOString(),
             text: feedback,
             company: companyName,
             upvotes: 0,
-            createdAt: new Date(),
+            createdAt: new Date().toISOString(),
         };
 
-        console.log(feedbackData);
-        console.log(getDaysAgo(feedbackData.createdAt));
+        setFeedbackItems((prevFeedbackItems) => [
+            feedbackData,
+            ...prevFeedbackItems,
+        ]);
 
         setFeedback("");
     };
