@@ -1,9 +1,8 @@
 import { TriangleUpIcon } from "@radix-ui/react-icons";
-import { initialFeedbackItems } from "../lib/constants";
-import { getDaysAgo } from "../lib/utils";
+import { TFeedbackItem } from "../lib/types";
 
 type FeedbackProps = {
-    feedbackItem: (typeof initialFeedbackItems)[0];
+    feedbackItem: TFeedbackItem;
 };
 
 export default function Feedback({ feedbackItem }: FeedbackProps) {
@@ -14,7 +13,7 @@ export default function Feedback({ feedbackItem }: FeedbackProps) {
                     <button className="flex flex-col items-center px-2 py-1 rounded-lg hover:bg-black/5 transition group/btn">
                         <TriangleUpIcon className="h-5 w-5 text-black/40 group-hover/btn:text-[#5c458c]" />
                         <span className="text-sm -mt-1 text-black/80">
-                            {feedbackItem.upvotes}
+                            {feedbackItem.upvoteCount}
                         </span>
                     </button>
                     <div
@@ -22,7 +21,7 @@ export default function Feedback({ feedbackItem }: FeedbackProps) {
                             text-white group-[:nth-child(6n-5)]/feedback:bg-[#564989] group-[:nth-child(6n-4)]/feedback:bg-[#6d4989] group-[:nth-child(6n-3)]/feedback:bg-[#3c7789]
                             group-[:nth-child(6n-2)]/feedback:bg-[#897749] group-[:nth-child(6n-1)]/feedback:bg-[#4a8b6b] group-[:nth-child(6n)]/feedback:bg-[#495789]"
                     >
-                        {feedbackItem.company[0]}
+                        {feedbackItem.badgeLetter}
                     </div>
                 </div>
                 <div className="flex-grow">
@@ -32,7 +31,7 @@ export default function Feedback({ feedbackItem }: FeedbackProps) {
                     <p className="leading-tight">{feedbackItem.text}</p>
                 </div>
                 <span className="text-sm text-black/40 font-semibold">
-                    {getDaysAgo(feedbackItem.createdAt)}d
+                    {feedbackItem.daysAgo}d
                 </span>
             </div>
         </li>

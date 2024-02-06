@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { TEXTAREA_MAX_LENGTH } from "../lib/constants";
 import Warning from "./Warning";
 import { useFeedbackItemsContext } from "../lib/hooks";
+import { TFeedbackItem } from "../lib/types";
 
 export default function FeedbackForm() {
     const [feedback, setFeedback] = useState("");
@@ -39,12 +40,13 @@ export default function FeedbackForm() {
 
         const companyName = company.slice(1);
 
-        const feedbackData = {
+        const feedbackData: TFeedbackItem = {
             id: new Date().toISOString(),
             text: feedback,
             company: companyName,
-            upvotes: 0,
-            createdAt: new Date().toISOString(),
+            badgeLetter: companyName[0].toUpperCase(),
+            upvoteCount: 0,
+            daysAgo: 0,
         };
 
         setFeedbackItems((prevFeedbackItems) => [
