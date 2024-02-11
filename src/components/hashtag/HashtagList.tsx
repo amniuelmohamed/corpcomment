@@ -9,7 +9,7 @@ export default function HashtagList() {
         <ul className="md:basis-36 flex md:flex-col justify-center md:justify-start gap-2 flex-wrap">
             <li>
                 <button
-                    className="bg-white text-black font-semibold px-3 py-1 rounded-full border border-black hover:bg-black hover:text-white  transition-all"
+                    className="bg-black text-white font-semibold px-3 py-1 rounded-full border border-black hover:border-white/80 transition"
                     onClick={handleResetSelectedCompany}
                 >
                     Reset
