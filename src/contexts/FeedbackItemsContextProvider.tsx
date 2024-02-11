@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import { TFeedbackItem } from "../lib/types";
 import toast from "react-hot-toast";
 
@@ -7,11 +7,13 @@ type FeedbackItemsContextProviderProps = {
 };
 
 type FeedbackItemsContextType = {
-    feedbackItems: TFeedbackItem[];
-    setFeedbackItems: React.Dispatch<React.SetStateAction<TFeedbackItem[]>>;
+    filteredFeedbackItems: TFeedbackItem[];
     handleAddFeedback: (feedbackText: string, company: string) => void;
     loading: boolean;
     errorMessage: string;
+    companyList: string[];
+    handleSelectedCompany: (company: string) => void;
+    handleResetSelectedCompany: () => void;
 };
 
 export const FeedbackItemsContext =
@@ -20,9 +22,34 @@ export const FeedbackItemsContext =
 export default function FeedbackItemsContextProvider({
     children,
 }: FeedbackItemsContextProviderProps) {
-    const [feedbackItems, setFeedbackItems] = useState<TFeedbackItem[]>([]);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
+    const [feedbackItems, setFeedbackItems] = useState<TFeedbackItem[]>([]);
+    const [selectedCompany, setSelectedCompany] = useState<string>("");
+
+    const filteredFeedbackItems = useMemo(
+        () =>
+            selectedCompany
+                ? feedbackItems.filter(
+                      (feedbackItem) =>
+                          feedbackItem.company.toUpperCase() === selectedCompany
+                  )
+                : feedbackItems,
+        [feedbackItems, selectedCompany]
+    );
+
+    const companyList = useMemo(() => {
+        const upperCaseCompanyList = feedbackItems.map((feedbackItem) =>
+            feedbackItem.company.toUpperCase()
+        );
+        return feedbackItems
+            .map((feedbackItem) => feedbackItem.company)
+            .filter(
+                (value, index) =>
+                    upperCaseCompanyList.indexOf(value.toUpperCase()) === index
+            );
+    }, [feedbackItems]);
 
     const fetchFeedbacks = async () => {
         setLoading(true);
@@ -72,9 +99,18 @@ export default function FeedbackItemsContextProvider({
 
             toast.success("Feedback added successfully");
             fetchFeedbacks();
+            setSelectedCompany("");
         } catch (e) {
             toast.error("Failed to add feedback");
         }
+    };
+
+    const handleSelectedCompany = (company: string) => {
+        setSelectedCompany(company.toUpperCase());
+    };
+
+    const handleResetSelectedCompany = () => {
+        setSelectedCompany("");
     };
 
     useEffect(() => {
@@ -84,11 +120,13 @@ export default function FeedbackItemsContextProvider({
     return (
         <FeedbackItemsContext.Provider
             value={{
-                feedbackItems,
-                setFeedbackItems,
+                filteredFeedbackItems,
                 handleAddFeedback,
                 loading,
                 errorMessage,
+                companyList,
+                handleSelectedCompany,
+                handleResetSelectedCompany,
             }}
         >
             {children}

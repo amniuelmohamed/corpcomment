@@ -4,7 +4,8 @@ import Feedback from "./Feedback";
 import Warning from "../Warning";
 
 export default function FeedbackList() {
-    const { feedbackItems, loading, errorMessage } = useFeedbackItemsContext();
+    const { filteredFeedbackItems, loading, errorMessage } =
+        useFeedbackItemsContext();
 
     return (
         <ol className="feedback-list bg-[#f8f8fa] flex-grow overflow-auto ">
@@ -18,7 +19,7 @@ export default function FeedbackList() {
                     <Warning message={errorMessage} />
                 </li>
             )}
-            {feedbackItems.map((feedbackItem) => (
+            {filteredFeedbackItems.map((feedbackItem) => (
                 <Feedback key={feedbackItem.id} feedbackItem={feedbackItem} />
             ))}
         </ol>
