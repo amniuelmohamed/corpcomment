@@ -10,6 +10,7 @@ export default function FeedbackForm() {
 
     const remainingCharacters = TEXTAREA_MAX_LENGTH - feedback.length;
 
+    const [showValidIndicator, setShowValidIndicator] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
 
     const { handleAddFeedback, errorMessage } = useFeedbackItemsContext();
@@ -37,6 +38,11 @@ export default function FeedbackForm() {
             return;
         }
 
+        setShowValidIndicator(true);
+        setTimeout(() => {
+            setShowValidIndicator(false);
+        }, 2000);
+
         handleAddFeedback(feedback, company.slice(1));
         setFeedback("");
     };
@@ -49,7 +55,9 @@ export default function FeedbackForm() {
 
     return (
         <form
-            className="relative w-[500px] max-w-full mt-8 h-[160px] rounded-md bg-white/5 flex flex-col"
+            className={`relative w-[500px] max-w-full mt-8 h-[160px] rounded-md bg-white/5 flex flex-col ${
+                warningMessage.length > 0 && "border border-red-500/80"
+            } ${showValidIndicator && "border border-green-500/80"}`}
             onSubmit={handleSubmit}
         >
             <textarea
@@ -60,6 +68,7 @@ export default function FeedbackForm() {
                 className="resize-none p-3 outline-none bg-transparent text-white/80 flex-grow disabled:opacity-50 peer"
                 placeholder=""
                 disabled={errorMessage.length > 0}
+                spellCheck="false"
             />
             <label
                 htmlFor="feedback"
