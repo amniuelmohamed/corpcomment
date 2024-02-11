@@ -25,7 +25,7 @@ export default function Feedback({ feedbackItem }: FeedbackProps) {
             <div className="flex items-center gap-3 md:gap-4 px-2 md:px-8 py-4 bg-white border-b border-black/5 hover:-translate-x-1 transition-all cursor-pointer">
                 <div className="flex flex-col items-center md:flex-row md:gap-2">
                     <button
-                        className="flex flex-col items-center px-2 py-1 rounded-lg hover:bg-black/5 transition group/btn disabled:hover:bg-inherit"
+                        className="flex flex-col items-center px-2 py-1 w-[44px] rounded-lg hover:bg-black/5 transition group/btn disabled:hover:bg-inherit"
                         onClick={handleUpvote}
                     >
                         <TriangleUpIcon className="h-5 w-5 text-black/40 group-hover/btn:text-[#5c458c] group-disabled/btn:hidden" />
