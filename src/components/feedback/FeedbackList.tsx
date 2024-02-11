@@ -1,15 +1,18 @@
 import { HashLoader } from "react-spinners";
-import { useFeedbackItemsContext } from "../../lib/hooks";
 import Feedback from "./Feedback";
 import Warning from "../Warning";
+import { useFeedbackItemsStore } from "../../stores/feedbackItemsStore";
 
 export default function FeedbackList() {
-    const { filteredFeedbackItems, loading, errorMessage } =
-        useFeedbackItemsContext();
+    const filteredFeedbackItems = useFeedbackItemsStore((state) =>
+        state.getFilteredFeedbackItems()
+    );
+    const isLoading = useFeedbackItemsStore((state) => state.isLoading);
+    const errorMessage = useFeedbackItemsStore((state) => state.errorMessage);
 
     return (
         <ol className="feedback-list bg-[#f8f8fa] flex-grow overflow-auto ">
-            {loading && (
+            {isLoading && (
                 <li className="flex items-center justify-center h-full">
                     <HashLoader color="#6d4989" />
                 </li>

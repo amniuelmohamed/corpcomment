@@ -46,7 +46,7 @@ export default function Feedback({ feedbackItem }: FeedbackProps) {
                         {feedbackItem.company}
                     </h3>
                     <p
-                        className={`leading-tight ${
+                        className={`leading-tight pb-[1px] ${
                             !isOpened && "line-clamp-2"
                         }`}
                     >

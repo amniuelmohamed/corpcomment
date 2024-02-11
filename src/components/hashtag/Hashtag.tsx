@@ -1,11 +1,15 @@
-import { useFeedbackItemsContext } from "../../lib/hooks";
+import { useFeedbackItemsStore } from "../../stores/feedbackItemsStore";
 
 type HashtagProps = {
     company: string;
 };
 
 export default function Hashtag({ company }: HashtagProps) {
-    const { handleSelectedCompany } = useFeedbackItemsContext();
+    const handleSelectedCompany = useFeedbackItemsStore(
+        (state) => state.selectCompany
+    );
+
+    console.log("Hashtag rendered");
 
     return (
         <li>
