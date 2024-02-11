@@ -2,7 +2,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import { useRef, useState } from "react";
 import { TEXTAREA_MAX_LENGTH } from "../../lib/constants";
 import Warning from "../Warning";
-import { useFeedbackItemsContext } from "../../lib/hooks";
+import { useFeedbackItemsStore } from "../../stores/feedbackItemsStore";
 
 export default function FeedbackForm() {
     const [feedback, setFeedback] = useState("");
@@ -10,10 +10,12 @@ export default function FeedbackForm() {
 
     const remainingCharacters = TEXTAREA_MAX_LENGTH - feedback.length;
 
-    const [showValidIndicator, setShowValidIndicator] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
 
-    const { handleAddFeedback, errorMessage } = useFeedbackItemsContext();
+    const handleAddFeedback = useFeedbackItemsStore(
+        (state) => state.addFeedback
+    );
+    const errorMessage = useFeedbackItemsStore((state) => state.errorMessage);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -38,11 +40,6 @@ export default function FeedbackForm() {
             return;
         }
 
-        setShowValidIndicator(true);
-        setTimeout(() => {
-            setShowValidIndicator(false);
-        }, 2000);
-
         handleAddFeedback(feedback, company.slice(1));
         setFeedback("");
     };
@@ -57,7 +54,7 @@ export default function FeedbackForm() {
         <form
             className={`relative w-[500px] max-w-full mt-8 h-[160px] rounded-md bg-white/5 flex flex-col ${
                 warningMessage.length > 0 && "border border-red-500/80"
-            } ${showValidIndicator && "border border-green-500/80"}`}
+            }`}
             onSubmit={handleSubmit}
         >
             <textarea

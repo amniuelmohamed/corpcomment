@@ -1,9 +1,16 @@
-import { useFeedbackItemsContext } from "../../lib/hooks";
+import { useFeedbackItemsStore } from "../../stores/feedbackItemsStore";
 import Hashtag from "./Hashtag";
 
 export default function HashtagList() {
-    const { companyList, handleResetSelectedCompany } =
-        useFeedbackItemsContext();
+    const companyList = useFeedbackItemsStore((state) =>
+        state.getCompanyList()
+    );
+    const handleResetSelectedCompany = useFeedbackItemsStore(
+        (state) => state.resetSelectedCompany
+    );
+
+    console.log(companyList);
+    console.log(handleResetSelectedCompany);
 
     return (
         <ul className="md:basis-36 flex md:flex-col justify-center md:justify-start gap-2 flex-wrap">
