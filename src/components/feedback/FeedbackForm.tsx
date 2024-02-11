@@ -1,5 +1,5 @@
 import { Pencil1Icon } from "@radix-ui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { TEXTAREA_MAX_LENGTH } from "../../lib/constants";
 import Warning from "../Warning";
 import { useFeedbackItemsContext } from "../../lib/hooks";
@@ -47,10 +47,6 @@ export default function FeedbackForm() {
         setFeedback(e.target.value);
     };
 
-    useEffect(() => {
-        inputRef.current?.focus();
-    }, []);
-
     return (
         <form
             className="relative w-[500px] max-w-full mt-8 h-[160px] rounded-md bg-white/5 flex flex-col"
@@ -61,13 +57,13 @@ export default function FeedbackForm() {
                 value={feedback}
                 onChange={handleInput}
                 id="feedback"
-                className="resize-none p-3 outline-none peer bg-transparent text-white/80 flex-grow disabled:opacity-50"
+                className="resize-none p-3 outline-none bg-transparent text-white/80 flex-grow disabled:opacity-50 peer"
                 placeholder=""
                 disabled={errorMessage.length > 0}
             />
             <label
                 htmlFor="feedback"
-                className="absolute left-0 top-3 px-3 text-white/50 italic peer-placeholder-shown:block hidden transition-all cursor-text"
+                className="absolute left-0 top-3 px-3 text-white/50 italic transition-all cursor-text hidden peer-placeholder-shown:block peer-focus:hidden"
             >
                 Enter you feedback here, remember to #hashtag your company name{" "}
                 <Pencil1Icon className="inline" />
